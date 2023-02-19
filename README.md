@@ -13,6 +13,7 @@ AddValidationInformation adds validation information for PAdES-LTV.
 ## Author
 
 Tanaka Akira <akr@fsij.org>
+Kei Misawa
 
 ## Prerequisite
 
@@ -29,6 +30,10 @@ Tanaka Akira <akr@fsij.org>
 
 If you want to run without Maven, set CLASSPATH with
 `mvn dependency:build-classpath` and `target/pdftimestamp-*.jar`.
+
+Run with a single JAR file (with dependency):
+
+    java -jar pdftimestamp-all.jar TSA-URL INPUT-PDF OUTPUT-PDF [-p PDF-PASSWORD]
 
 ## Links
 
