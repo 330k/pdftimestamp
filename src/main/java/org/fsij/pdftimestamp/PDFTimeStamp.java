@@ -66,7 +66,7 @@ public class PDFTimeStamp {
     File inputFile = new File(args[1]);
     File outputFile = new File(args[2]);
 
-    File tempFile = new File(args[1] + ".tmp");
+    File tempFile = new File(args[2] + ".tmp");
 
     addTimestamp(tsaURL, inputFile, tempFile, password);
     addLTV(tempFile, outputFile, password);

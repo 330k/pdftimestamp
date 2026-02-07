@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Online PDF TimeStamp</title>
+    <script src="https://cjrtnc.leaningtech.com/4.2/loader.js"></script>
+  </head>
+  <body>
+    <h1>Online PDF TimeStamp</h1>
+    <fieldset>
+     <legend>PDF</legend>
+     <input type="file" id="file_pdf" accept=".pdf" disabled>
+     <select id="timestampserver">
+      <option value="http://ts.ssl.com">http://ts.ssl.com</option>
+      <option value="http://timestamp.apple.com/ts01">http://timestamp.apple.com/ts01</option>
+      <option value="http://www.langedge.jp/tsa">http://www.langedge.jp/tsa</option>
+      <option value="https://freetsa.org/tsr">https://freetsa.org/tsr</option>
+     </select>
+    </fieldset>
+    <div id="message">Initializing CheerPJ...</div>
+    <pre id="console"></pre>
+    <h2>Summary</h2>
+    <div>This tool runs pdftimestamp.jar on your browser with CheerPJ, a WebAssembly based JavaVM.</div>
+    <h2>References</h2>
+    <ul>
+     <li><a href="https://cheerpj.com/" target="_blank">CheerPJ</a></li>
+     <li><a href="https://github.com/330k/pdftimesampt/" target="_blank">GitHub</a></li>
+    </ul>
+    <script>
+function message(text){
+  document.getElementById("message").innerText = text;
+}
+function clear_console(){
+  document.getElementById("console").innerText = "";
+}
+
+const $file_pdf = document.getElementById("file_pdf");
+
+(async function () {
+  await cheerpjInit({
+    version: 17
+  });
+  $file_pdf.disabled = false;
+  message("Ready");
+
+  $file_pdf.addEventListener("change", function(e){
+    $file_pdf.disabled = true;
+    message("loading...");
+    clear_console();
+    const reader = new FileReader();
+    reader.onload = async function(e2){
+      await cheerpOSAddStringFile("/str/input.pdf", new Uint8Array(e2.target.result));
+
+      message("adding timestamp and LTV...");
+      await cheerpjRunJar("/app/pdftimestamp/pdftimestamp-all.jar", document.getElementById("timestampserver").value, "/str/input.pdf", "/files/output.pdf");
+
+      message("downloading...");
+      const blob = await cjFileBlob("/files/output.pdf");
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement("a");
+      link.href = url;
+      link.download = e.target.files[0].name.replace(/\.pdf$/i, "_ts.pdf");
+      link.click();
+      URL.revokeObjectURL(url);
+
+      message("Ready");
+      $file_pdf.disabled = false;
+      $file_pdf.value = null;
+    };
+    reader.readAsArrayBuffer(e.target.files[0]);
+  });
+})();
+    </script>
+  </body>
+</html>
