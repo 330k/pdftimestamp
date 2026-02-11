@@ -40,6 +40,7 @@ public class PDFTimeStamp {
 
     options.addOption("h", "help", false, "show help message");
     options.addOption("p", true, "PDF password");
+    options.addOption("t", false, "Timestamp Only (No LTV)");
     options.addOption(null, "ask-password", false, "ask PDF password interactively");
 
     CommandLineParser parser = new DefaultParser();
@@ -64,14 +65,19 @@ public class PDFTimeStamp {
 
     String tsaURL = args[0];
     File inputFile = new File(args[1]);
-    File outputFile = new File(args[2]);
 
-    File tempFile = new File(args[1] + ".tmp");
+    if (cmd.hasOption("t")) {
+      File outputFile = new File(args[2]);
+      addTimestamp(tsaURL, inputFile, outputFile, password);
 
-    addTimestamp(tsaURL, inputFile, tempFile, password);
-    addLTV(tempFile, outputFile, password);
+    } else {
+      File outputFile = new File(args[2]);
+      File tempFile = new File(args[2] + ".tmp");
+      addTimestamp(tsaURL, inputFile, tempFile, password);
+      addLTV(tempFile, outputFile, password);
 
-    tempFile.delete();
+      tempFile.delete();
+    }
   }
 
   private static void addTimestamp(String tsaURL, File inputFile, File outputFile, String password) throws IOException {
