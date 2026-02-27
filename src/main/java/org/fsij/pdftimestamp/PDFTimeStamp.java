@@ -40,7 +40,7 @@ public class PDFTimeStamp {
 
     options.addOption("h", "help", false, "show help message");
     options.addOption("p", true, "PDF password");
-    options.addOption("t", false, "Timestamp Only (No LTV)");
+    options.addOption("t", false, "Timestamp Only (No LTV)"); // 330k Feb 11 2026 Add Option
     options.addOption(null, "ask-password", false, "ask PDF password interactively");
 
     CommandLineParser parser = new DefaultParser();
@@ -66,6 +66,7 @@ public class PDFTimeStamp {
     String tsaURL = args[0];
     File inputFile = new File(args[1]);
 
+    // 330k Feb 11 2026 Add 'Timestamp Only' Option
     if (cmd.hasOption("t")) {
       File outputFile = new File(args[2]);
       addTimestamp(tsaURL, inputFile, outputFile, password);

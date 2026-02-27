@@ -13,6 +13,7 @@
 
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+    <!-- 330k Feb 11 2024 Change Java Version from 1.7 to 1.8 -->
     <maven.compiler.source>1.8</maven.compiler.source>
     <maven.compiler.target>1.8</maven.compiler.target>
   </properties>
@@ -101,6 +102,7 @@
       </plugins>
     </pluginManagement>
 
+    <!-- 330k Feb 19 2023 create single jar -->
     <plugins>
       <plugin>
         <artifactId>maven-assembly-plugin</artifactId>
