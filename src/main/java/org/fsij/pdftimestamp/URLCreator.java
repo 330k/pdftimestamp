@@ -31,7 +31,8 @@ public class URLCreator {
      * @return 生成されたURLオブジェクト
      */
     public static URL createURL(String baseUrlStr) throws MalformedURLException {
-        String fullUrlStr = "https://generic-proxy.330k.workers.dev/?x-url=" + baseUrlStr;
+        //String fullUrlStr = "https://generic-proxy.330k.workers.dev/?x-url=" + baseUrlStr;
+        String fullUrlStr = baseUrlStr;
         try{
             return new URI(fullUrlStr).toURL();
         }catch(URISyntaxException e){
