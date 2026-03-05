@@ -298,7 +298,7 @@ public class CertInformationCollector
         LOG.info("Get alternative issuer certificate from: " + certInfo.issuerUrl);
         try
         {
-            URL certUrl = new URL(certInfo.issuerUrl);
+            URL certUrl = URLCreator.createURL(certInfo.issuerUrl); // 20260305 330k
             CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
             try (InputStream in = certUrl.openStream())
             {

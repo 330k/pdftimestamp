@@ -64,7 +64,7 @@ public class ValidationTimeStamp
         if (tsaUrl != null)
         {
             MessageDigest digest = MessageDigest.getInstance("SHA-256");
-            this.tsaClient = new TSAClient(new URL(tsaUrl), null, null, digest);
+            this.tsaClient = new TSAClient(URLCreator.createURL(tsaUrl), null, null, digest); // 20260305 330k
         }
     }
 

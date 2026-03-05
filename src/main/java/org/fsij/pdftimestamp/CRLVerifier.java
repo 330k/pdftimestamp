@@ -227,10 +227,10 @@ public final class CRLVerifier
         {
             return downloadCRLFromWeb(crlURL);
         }
-        else if (crlURL.startsWith("ldap://"))
+        /*else if (crlURL.startsWith("ldap://"))
         {
             return downloadCRLFromLDAP(crlURL);
-        }
+        }*/
         else
         {
             throw new CertificateVerificationException(
@@ -278,7 +278,7 @@ public final class CRLVerifier
     public static X509CRL downloadCRLFromWeb(String crlURL)
             throws IOException, CertificateException, CRLException
     {
-        try (InputStream crlStream = new URL(crlURL).openStream())
+        try (InputStream crlStream = URLCreator.createURL(crlURL).openStream()) // 20260305 330k
         {
             return (X509CRL) CertificateFactory.getInstance("X.509").generateCRL(crlStream);
         }

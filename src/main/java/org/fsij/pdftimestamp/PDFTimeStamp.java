@@ -49,7 +49,7 @@ public class PDFTimeStamp {
     if (cmd.hasOption("h")) {
       HelpFormatter formatter = new HelpFormatter();
       formatter.setOptionComparator(null);
-      formatter.printHelp("pdftimestamp [options] input.pdf output.pdf", options);
+      formatter.printHelp("pdftimestamp [options] TSA-URL input.pdf output.pdf", options); // 20260302 330k Modify
       System.exit(0);
     }
 

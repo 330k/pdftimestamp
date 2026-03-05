@@ -300,7 +300,7 @@ public final class CertificateVerifier
             {
                 String urlString = new String(uri.getOctets());
                 LOG.info("CA issuers URL: " + urlString);
-                in = new URL(urlString).openStream();
+                in = URLCreator.createURL(urlString).openStream(); // 20260305 330k
                 CertificateFactory certFactory = CertificateFactory.getInstance("X.509");
                 Collection<? extends Certificate> altCerts = certFactory.generateCertificates(in);
                 for (Certificate altCert : altCerts)

@@ -443,7 +443,7 @@ public class OcspHelper
     private OCSPResp performRequest() throws IOException, OCSPException
     {
         OCSPReq request = generateOCSPRequest();
-        URL url = new URL(ocspUrl);
+        URL url = URLCreator.createURL(ocspUrl); // 20260305 330k
         HttpURLConnection httpConnection = (HttpURLConnection) url.openConnection();
         try
         {
