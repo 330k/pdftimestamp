@@ -21,22 +21,38 @@ package org.fsij.pdftimestamp;
 
 import java.net.URI;
 import java.net.URL;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.net.URISyntaxException;
 import java.net.MalformedURLException;
+import java.io.UnsupportedEncodingException;
 
 public class URLCreator {
     /**
      * Cloudflare Workersをプロキシとして使う文字列を付加してURLオブジェクトを生成する
+     * 指定例) java "-Dpdftimestamp.urlprefix=https%3A%2F%2Fexample.com%2Fproxy%3Furl%3D" ***
      * @param baseUrlStr ベースとなるURL文字列
      * @return 生成されたURLオブジェクト
      */
     public static URL createURL(String baseUrlStr) throws MalformedURLException {
-        String fullUrlStr = "https://generic-proxy.330k.workers.dev/?x-url=" + baseUrlStr;
-        //String fullUrlStr = baseUrlStr;
         try{
+            String urlPrefix = URLDecoder.decode(System.getProperty("pdftimestamp.urlprefix", ""), "UTF-8");
+            //System.out.println("urlPrefix: "+ urlPrefix);
+            String fullUrlStr = null;
+            if(urlPrefix.isEmpty()){
+                fullUrlStr = baseUrlStr;
+            }else{
+                fullUrlStr = urlPrefix + baseUrlStr;
+            }
+
             return new URI(fullUrlStr).toURL();
+
         }catch(URISyntaxException e){
             return null;
+
+        }catch(UnsupportedEncodingException e){
+            return null;
+
         }
     }
 }
